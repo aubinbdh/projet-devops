@@ -8,7 +8,7 @@
 3. Ajoutez Express pour créer une application web.
 4. Rédigez une description dans le fichier `README.md`.
 
-## Pour commencer le Lab 1 :
+### Pour commencer le Lab 1 :
 git clone
 cd projet-devops
 npm install
