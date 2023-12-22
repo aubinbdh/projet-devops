@@ -9,8 +9,7 @@
 4. Rédigez une description dans le fichier `README.md`.
 
 ### Pour commencer le Lab 1 :
-```bash
-git clone https://github.com/votre-utilisateur/projet-devops.git
+git clone ...
 cd projet-devops
 npm install
 npm start
