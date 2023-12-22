@@ -64,6 +64,7 @@ cd nom-du-lab
 
 ### Exécution des tests
 
+ne pas oublier d'installer mocha : npm install --save-dev mocha
 ```bash
 (bien verifier que mo)
 cd lab
