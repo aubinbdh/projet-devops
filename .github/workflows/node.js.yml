@@ -26,6 +26,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: cd userapi/Lab3 npm ci
-    - run: cd userapi/Lab3 npm run build --if-present
-    - run: cd userapi/Lab3 npm test
+    - run: cd userapi/Lab3 && npm ci
+    - run: cd userapi/Lab3 && npm run build --if-present
+    - run: cd userapi/Lab3 && npm test
