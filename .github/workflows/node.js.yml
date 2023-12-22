@@ -37,8 +37,8 @@ jobs:
       
       # Cette étape exécute npm install pour installer les dépendances de votre package.json.
       - run: npm install
-        working-directory: ./Lab3
+        
       
       # Cette étape exécute npm test pour exécuter les tests définis dans votre package.json.
       - run: npm test
-        working-directory: ./Lab3
+
