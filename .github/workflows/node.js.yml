@@ -1,0 +1,48 @@
+#Nom du workflow. GitHub affiche les noms de vos workflows sous l’onglet « Actions » de votre référentiel. Si vous omettez `name`, GitHub affiche le chemin du fichier de workflow relatif à la racine du référentiel.
+name: Node.js CI
+
+# This example workflow assumes that the default branch for your repository is `main`. If the default branch has a different name, edit this example and add your repository's default branch.
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+#
+jobs:
+  build:
+
+    # <!-- This is a YAML comment for use in annotated code examples. -->
+    # Vous pouvez exécuter ce workflow à l’aide d’un autre système d’exploitation.
+    #
+    # Le workflow de démarrage configure les travaux à exécuter sur Linux, à l’aide d’exécuteurs `ubuntu-latest` hébergés par GitHub. Vous pouvez modifier la clé `runs-on` pour exécuter vos travaux sur un autre système d’exploitation.
+    #
+    # Par exemple, vous pouvez utiliser des exécuteurs Windows hébergés sur GitHub en spécifiant `runs-on: windows-latest`. Vous pouvez également exécuter sur les exécuteurs de données macOS hébergés sur GitHub en utilisant `runs-on: macos-latest`.
+    #
+    # Vous pouvez également exécuter des travaux dans des conteneurs Docker, ou vous pouvez fournir un exécuteur auto-hébergé qui s’exécute sur votre propre infrastructure. Pour plus d’informations, consultez « [AUTOTITLE](/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idruns-on) ».
+    runs-on: ubuntu-latest
+
+    # This job uses a matrix strategy to run the job four times, once for each specified Node version. For more information, see "[AUTOTITLE](/actions/using-jobs/using-a-matrix-for-your-jobs)."
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x, 20.x]
+#
+    steps:
+      # Cette étape utilise l’action `actions/checkout` pour télécharger une copie de votre référentiel sur l’exécuteur.
+      - uses: actions/checkout@v3
+      # This step uses the `actions/setup-node` action to set up Node.js for each version indicated by the `matrix.node-version` key above.
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      # This step runs `npm ci` to install any dependencies listed in your `package.json` file.
+      - name: Start Redis
+        uses: supercharge/redis-github-action@1.7.0
+        with:
+          redis-version: ${{ matrix.redis-version }}
+      
+      - run: npm install
+        working-directory: userapi
+      # This step runs the `test` script that is specified under the `scripts` key in your `package.json` file.
+      - run: npm test
+        working-directory: userapi
