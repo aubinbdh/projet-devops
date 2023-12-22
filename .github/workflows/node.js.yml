@@ -8,24 +8,37 @@ on:
   pull_request:
     branches: [main]
 
-# ... (partie précédente du fichier YAML)
-
 jobs:
   build:
+    # Le workflow de démarrage configure les travaux à exécuter sur Linux, à l’aide d’exécuteurs `ubuntu-latest` hébergés par GitHub. Vous pouvez modifier la clé runs-on pour exécuter vos travaux sur un autre système d’exploitation.
     runs-on: ubuntu-latest
+
+    # Cette configuration utilise une stratégie de matrice pour exécuter le travail quatre fois, une fois pour chaque version de Node spécifiée. Pour plus d’informations, voir "Utilisation des stratégies de matrice pour vos travaux".
     strategy:
       matrix:
         node-version: ['14.x', '16.x', '18.x', '20.x']
         redis-version: ['latest']
+
     steps:
+      # Cette étape utilise l’action actions/checkout pour télécharger une copie de votre référentiel sur l’exécuteur.
       - uses: actions/checkout@v3
+      
+      # Cette étape utilise l’action actions/setup-node pour configurer Node.js pour chaque version indiquée par la clé matrix.node-version ci-dessus.
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+      
+      # Cette étape démarre Redis en utilisant l’action supercharge/redis-github-action.
       - name: Start Redis
         uses: supercharge/redis-github-action@1.7.0
         with:
           redis-version: ${{ matrix.redis-version }}
+      
+      # Cette étape exécute npm install pour installer les dépendances de votre package.json.
       - run: npm install
+        working-directory: ./Lab3
+      
+      # Cette étape exécute npm test pour exécuter les tests définis dans votre package.json.
       - run: npm test
+        working-directory: ./Lab3
