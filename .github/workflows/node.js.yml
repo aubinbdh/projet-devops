@@ -23,26 +23,22 @@ jobs:
     runs-on: ubuntu-latest
 
     # This job uses a matrix strategy to run the job four times, once for each specified Node version. For more information, see "[AUTOTITLE](/actions/using-jobs/using-a-matrix-for-your-jobs)."
-    strategy:
-      matrix:
-        node-version: [14.x, 16.x, 18.x, 20.x]
+   strategy:
+  matrix:
+    node-version: [14.x, 16.x, 18.x, 20.x]
+    redis-version: [latest]
 #
-    steps:
-      # Cette étape utilise l’action `actions/checkout` pour télécharger une copie de votre référentiel sur l’exécuteur.
+       steps:
       - uses: actions/checkout@v3
-      # This step uses the `actions/setup-node` action to set up Node.js for each version indicated by the `matrix.node-version` key above.
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      # This step runs `npm ci` to install any dependencies listed in your `package.json` file.
       - name: Start Redis
         uses: supercharge/redis-github-action@1.7.0
         with:
           redis-version: ${{ matrix.redis-version }}
-      
       - run: npm install
-        working-directory: userapi/Lab3
-      # This step runs the `test` script that is specified under the `scripts` key in your `package.json` file.
+        working-directory: ./Lab3
       - run: npm test
-        working-directory: userapi/Lab3
+        working-directory: ./Lab3
