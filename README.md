@@ -84,3 +84,58 @@ doit renvoyer 404 lorsque l'utilisateur n'existe pas : Assure une réponse 404 p
 
 
 ##Lab4
+
+##Lab5
+
+##Lab6
+### Etape 1 : Installation de Docker
+
+#### Vérifier si Docker est déjà installé
+docker run hello-world
+
+### Etape 2 : Écrire un Dockerfile et construire une image Docker
+
+#### Cloner le repository contenant l'application "Hello World"
+git clone <URL_DU_REPOSITORY>
+cd hello-world-docker
+
+#### Construire le conteneur Docker
+docker build -t hello-world-docker .
+
+#### Vérifier l'image Docker créée
+docker images
+
+### Etape 3 : Exécuter le conteneur Docker
+
+#### Démarrer le conteneur
+docker run -p 12345:8080 -d hello-world-docker
+
+#### Vérifier l'exécution du conteneur
+docker ps
+
+#### Accéder à l'application Web
+#### http://localhost:12345
+
+##### Afficher les journaux du conteneur
+docker logs <CONTAINER_ID>
+
+#### Arrêter le conteneur
+docker stop <CONTAINER_ID>
+
+### Etape 4 : Partager un conteneur Docker
+
+#### S'inscrire sur Docker Hub (https://hub.docker.com/)
+
+#### Reconstruire le conteneur avec un nom différent
+docker build -t nouvelle_image_aubin .
+
+#### Étiqueter le conteneur avec la nouvelle image
+docker tag nouvelle_image_aubin aubinbdh/image_aubin
+
+#### Se connecter à Docker Hub
+docker login
+
+#### Pousser la nouvelle image sur Docker Hub
+docker push aubinbdh/image_aubin
+
+#### Vérifier sur Docker Hub le push réalisé

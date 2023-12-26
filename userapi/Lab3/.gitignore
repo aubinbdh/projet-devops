@@ -1,19 +1,6 @@
-# Node.js
-node_modules/
-mocha/
-
-# Logs
-logs
-*.log
-npm-debug.log*
-
-# Dependency directories
-lib/
-vendor/
-
-# IDE
-.idea/
-.vscode/
-
-# Ignore files generated during testing
-coverage/
+node_modules
+.*
+!.github
+!.gitignore
+!.eslintignore
+!.eslintrc.json

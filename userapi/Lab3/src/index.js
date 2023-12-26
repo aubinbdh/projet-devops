@@ -1,16 +1,28 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const app = express();
-const port = 3000;
+const express = require('express')
+const userRouter = require('./routes/user')
+const bodyParser = require('body-parser')
 
-app.use(bodyParser.json());
+const app = express()
+const port = process.env.PORT || 3001
 
-// Ajoutez les routes ici
-const userRoute = require('./routes/user');
-app.use(userRoute);
+const db = require('./dbClient')
+db.on("error", (err) => {
+  console.error(err)
+})
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+app.use(bodyParser.urlencoded({
+  extended: false
+}))
+app.use(bodyParser.json())
 
-module.exports = app;
+app.get('/', (req, res) => res.send('Hello World!'))
+
+app.use('/user', userRouter)
+
+const server = app.listen(port, (err) => {
+  if (err) throw err
+  console.log("Server listening the port " + port)
+})
+
+
+module.exports = server

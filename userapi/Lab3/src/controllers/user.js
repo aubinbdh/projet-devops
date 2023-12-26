@@ -1,15 +1,38 @@
-// Exemple de données utilisateur pour les tests
-const users = [
-  { username: 'john_doe', name: 'John Doe', email: 'john@example.com' },
-  // Ajoutez d'autres utilisateurs si nécessaire
-];
+const db = require('../dbClient')
 
-const userController = {
-  getUserByUsername: (username) => {
-      // Recherchez l'utilisateur dans la liste
-      const user = users.find((u) => u.username === username);
-      return user || null;
+module.exports = {
+  create: (user, callback) => {
+    // Check parameters
+    if(!user.username)
+      return callback(new Error("Wrong user parameters"), null)
+    // Create User schema
+    const userObj = {
+      firstname: user.firstname,
+      lastname: user.lastname,
+    }
+    // Check if user already exists
+    db.hgetall(user.username, function(err, res) {
+      if (err) return callback(err, null)
+      if (!res) {
+        // Save to DB
+        db.hmset(user.username, userObj, (err, res) => {
+          if (err) return callback(err, null)
+          callback(null, res) // Return callback
+        })
+      } else {
+        callback(new Error("User already exists"), null)
+      }
+    })
   },
-};
-
-module.exports = userController;
+  get: (username, callback) => {
+    if(!username)
+      return callback(new Error("Username must be provided"), null)
+    db.hgetall(username, function(err, res) {
+      if (err) return callback(err, null)
+      if (res)
+        callback(null, res)
+      else
+        callback(new Error("User doesn't exists"), null)
+    })
+  }
+}

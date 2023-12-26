@@ -1,17 +1,44 @@
-const express = require('express');
-const router = express.Router();
-const userController = require('../controllers/user');
+const express = require('express')
+const userController = require('../controllers/user')
 
-// GET user by username
-router.get('/api/user/:username', (req, res) => {
-  const username = req.params.username;
-  const user = userController.getUserByUsername(username);
+const userRouter = express.Router()
 
-  if (user) {
-    res.status(200).json(user);
-  } else {
-    res.status(404).json({ error: 'User not found' });
-  }
-});
-
-module.exports = router;
+userRouter
+  .post('/', (req, resp) => {
+    userController.create(req.body, (err, res) => {
+      let respObj
+      if(err) {
+        respObj = {
+          status: "error",
+          msg: err.message
+        }
+        return resp.status(400).json(respObj)
+      }
+      respObj = {
+        status: "success",
+        msg: res
+      }
+      resp.status(201).json(respObj)
+    })
+  })
+  .get('/:username', (req, resp, next) => { // Express URL params - https://expressjs.com/en/guide/routing.html
+    // TODO Create get method API
+    const username = req.params.username
+    userController.get(username, (err, res) => {
+      let respObj
+      if(err) {
+        respObj = {
+          status: "error",
+          msg: err.message
+        }
+        return resp.status(400).json(respObj)
+      }
+      respObj = {
+        status: "success",
+        msg: res
+      }
+      resp.status(200).json(respObj)
+    })
+  })
+  
+module.exports = userRouter
