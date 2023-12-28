@@ -139,3 +139,96 @@ docker login
 docker push aubinbdh/image_aubin
 
 #### Vérifier sur Docker Hub le push réalisé
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ECE-DEVOPS-VU-HUY-DAT
+
+Ce projet à pour but de mettre en pratique les différentes applications vues en cours.
+
+## Screenshots
+
+- [Résultats des différents tests](/rapport.md)
+
+## Instructions
+
+### Installation
+
+- Clone repository
+
+```sh
+git clone https://github.com/Mattvhd/ece-devops-vu-huy-dat.git
+```
+
+
+
+- [Installation des dépendances pour userapi](./userapi/README.md#installation)
+
+- [Installation de Vagrant](iac/README.md#prerequisite)
+
+- [Installation de Docker](https://www.docker.com/get-started)
+
+- [Installation de Minikube](https://minikube.sigs.k8s.io/docs/start/) for Kubernetes
+
+
+### Usage
+
+- [Application via userapi](./userapi/README.md#usage)
+
+- Build Docker image
+
+```sh
+docker build -t ece-devops-vu-huy-dat .
+```
+
+- Using Docker Compose
+
+```sh
+docker-compose up
+```
+
+Server on http://localhost:8000
+
+- [Utilisation de Kubernetes](./k8s/README.md#usage)
+
+
+### Test
+
+- [Test userapi](./userapi/README.md#testing)
+
+## Platforms & Tools
+
+- [Node.js](https://nodejs.org/en/)
+- [Github Action](https://github.com/polocto/Project-SI/actions)
+- [Heroku](https://project-dev-ops.herokuapp.com/)
+- [Vagrant _(ubuntu/trusty64)_](https://www.vagrantup.com/)
+- [Docker Hub](https://hub.docker.com)
+- [Kubernetes](https://kubernetes.io/)
+- [Istio](https://istio.io/)
+    - [Kiali](https://kiali.io/)
+- [GitHub : Corrections des labs](https://github.com/adaltas/ece-devops-2022-fall-corrections.git)
+- [GitHub : ece-devops-2022-fall](https://github.com/adaltas/ece-devops-2022-fall.git)
+
+
+## Bonus
+
+- Web App
+    - CRUD
+    - Stockage dans la base de données redis
+
+
+## Credits
+
+Matthieu Vu-Huy-Dat
+
